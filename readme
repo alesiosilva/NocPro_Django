@@ -135,7 +135,7 @@ uwsgi --http :8080 --wsgi-file gestao_rh/wsgi.py
 sudo apt-get install nginx
 #criar arquivo uwsgi_params dentro da pasta do projeto
 #incluir parametros https://github.com/nginx/nginx/blob/master/conf/uwsgi_params
-#criar arquivo /etc/nginx/sites-available/mysite_nginx.conf
+#criar arquivo /etc/nginx/sites-available/mysite_nginx.conf ou /etc/nginx/conf.d
 
 https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
 #criar link simbolico em /etc/nginx/sites-enabled/
