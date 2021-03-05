@@ -4,7 +4,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('apps.core.urls')),
+    path('', include('apps.core.urls'), name='home'),
+    path('centreon/', include('apps.centreon.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 

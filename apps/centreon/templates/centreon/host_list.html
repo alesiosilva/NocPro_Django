@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <div class="col-sm">
+        <a class="btn btn-light"  href="{% url 'home' %}">HOME</a>
+        <a class="btn btn-light"  href="{% url 'host_list' %}">CENTREON</a>
+    </div>
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm">
+            <a href="{% url 'logout' %}" class="btn btn-light btnlogout">Sair</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+  <table class="table table-striped">
+    <thead >
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">NOME</th>
+        <th scope="col">IC</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hosts in host_list %}
+      <tr>
+          <td>{{ hosts.id }}</td>
+          <td>{{ hosts.name }}</td>
+        <td>{{ hosts.address }}</td>
+      </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
