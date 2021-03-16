@@ -5,3 +5,7 @@ venv
 nocPro/__pycache__
 *.pyc
 nocPro.pem
+_access.py
+_access
+./_access.py
+./_access

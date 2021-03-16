@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.core',
     'apps.centreon',
+    'apps.acionamentos',
+    'apps.topdesk',
     'bootstrapform',
 ]
 

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block header %}
+ <div class="col-sm">
+        <a class="btn btn-light"  href="{% url 'home' %}">HOME</a>
+        <a class="btn btn-light"  href="{% url 'host_list' %}">CENTREON</a>
+        <a class="btn btn-light"  href="{% url 'ativos_list' %}">TOPDESK</a>
+        <a class="btn btn-light"  href="{% url 'list_acionamentos' %}">ACIONAMENTOS</a>
+    </div>
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm">
+            <a href="{% url 'logout' %}" class="btn btn-light btnlogout">Sair</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+    
+
+
+    <table class="table table-striped">
+        <thead >
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NOME</th>
+            <th scope="col">ATIVO</th>
+            <th scope="col">E-MAIL</th>
+            <th scope="col">TELEFONE</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% for acionamento in object_list %}
+          <tr>
+            <td>                  
+                  {{ acionamento.id }}
+            </td>
+            <td>
+                  <a href="{% url 'update_acionamento' acionamento.id %}">{{ acionamento.nome }}</a>
+            </td>
+            <td>
+              {{ acionamento.ativos }}
+            </td>
+            <td>
+              {{ acionamento.email }}
+            </td>
+            <td>
+              {{ acionamento.telefone }}
+            </td>
+            
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'create_acionamento' %}" class="btn btn-light">novo</a>
+
+{% endblock %}

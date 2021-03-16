@@ -162,6 +162,9 @@ https://simpleisbetterthancomplex.com/tutorial/2018/02/03/how-to-use-restful-api
 
 
 
+#django zerar banco
+python manage.py flush
 
+# criar app home, estruturar relacionamento, criar model de autoriações no adm.
 
 

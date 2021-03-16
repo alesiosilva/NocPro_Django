@@ -22,17 +22,15 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">NOME</th>
-        <th scope="col">IP</th>
-        <th scope="col">IC</th>
+        <th scope="col">specification</th>
       </tr>
     </thead>
     <tbody>
-      {% for hosts in host_list %}
+      {% for ativos in ativos_list %}
       <tr>
-          <td>{{ hosts.id }}</td>
-          <td>{{ hosts.name }}</td>
-          <td>{{ hosts.address }}</td>
-          <td>{{ hosts.notes }}</td>
+          <td>{{ ativos.unid }}</td>
+          <td>{{ ativos.name }}</td>
+        <td>{{ ativos.specification }}</td>
       </tr>
        {% endfor %}
     </tbody>
