@@ -5,7 +5,6 @@ from apps.centreon.views import host_field
 import requests
 
 
-
 class Acionamento(models.Model):
 
     

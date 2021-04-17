@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+      <form method="post">
+        {% csrf_token %}
+        <span>tem certeza que deseja excluir <b>{{ object.nome }}</b>?</span>
+        {{ form }}
+        <button type="submit">Confirmar</button>
+    </form>
+{% endblock %}

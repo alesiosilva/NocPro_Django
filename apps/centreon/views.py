@@ -3,10 +3,12 @@ from django.shortcuts import render
 import requests
 #from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from apps.core.models import Servers
 
-centreon_servidor = "url"
-centreon_api_user = "user"
-centreon_api_senha = "senha"
+model_servers = Servers.objects.get(pk=7)
+centreon_servidor = model_servers.host
+centreon_api_user = model_servers.user
+centreon_api_senha = model_servers.password
 
 def autenticar():
     response = requests.post(centreon_servidor + '/centreon/api/index.php?action=authenticate',

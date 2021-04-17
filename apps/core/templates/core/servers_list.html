@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+<a class="btn btn-light" href="{% url 'home' %}">HOME</a>
+<a href="{% url 'servers_create' %}" class="btn btn-success">Novo</a>
+
+    <table class="table table-striped">
+        <thead >
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NOME</th>
+            <th scope="col">HOST</th>
+            <th scope="col">USER</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for server in object_list %}
+          <tr>
+            <td>
+                  {{ server.id }}
+            </td>
+            <td>
+                  {{ server.nome }}
+            </td>
+            <td>
+                  {{ server.host }}
+            </td>
+            <td>
+              {{ server.user }}
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{% url 'servers_delete' server.id %}">Delete</a>
+            </td>
+
+
+
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+
+{% endblock %}
