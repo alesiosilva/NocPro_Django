@@ -53,7 +53,7 @@ def host_field():
                 # return HttpResponseRedirect("servers_create")
                 hosts = ()
                 return hosts
-        except requests.exceptions:
+        except requests.exceptions.Error:
             hosts = ()
             return hosts
 
