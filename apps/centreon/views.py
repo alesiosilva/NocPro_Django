@@ -39,9 +39,22 @@ def host_list(request):
         except requests.exceptions.ConnectionError as e:
             return HttpResponse("Erro ao conectar no servidor")
 
-
+#esse metodo dá erro ao fazer o makemigrations, debugar depois.
 def host_field():
-    hosts = ()
-    return hosts
+    try:
+        if Servers.objects.filter(nome="centreon"):
+            model_servers = Servers.objects.get(nome="centreon")
+            response = requests.get(model_servers.host + '/centreon/api/index.php?object=centreon_realtime_hosts&sortType=id&order=desc&action=list&fields=id,name,notes,address',
+            headers={'content-type': 'application/json', 'centreon-auth-token': autenticar()})
+            hosts = response.json()
+            #return hosts[1]['id']
+            return hosts
+        else:
+            # return HttpResponseRedirect("servers_create")
+            hosts = ()
+            return hosts
+    except requests.exceptions.ConnectionError:
+        hosts = ()
+        return hosts
 
 
