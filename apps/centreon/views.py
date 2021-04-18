@@ -41,20 +41,7 @@ def host_list(request):
 
 
 def host_field():
-    try:
-        if Servers.objects.filter(nome="centreon"):
-            model_servers = Servers.objects.get(nome="centreon")
-            response = requests.get(model_servers.host + '/centreon/api/index.php?object=centreon_realtime_hosts&sortType=id&order=desc&action=list&fields=id,name,notes,address',
-            headers={'content-type': 'application/json', 'centreon-auth-token': autenticar()})
-            hosts = response.json()
-            #return hosts[1]['id']
-            return hosts
-        else:
-            # return HttpResponseRedirect("servers_create")
-            hosts = ("host_list", "host_list")
-            return hosts
-    except requests.exceptions.ConnectionError:
-        hosts = ()
-        return hosts
+    hosts = ()
+    return hosts
 
 
