@@ -51,7 +51,7 @@ def host_field():
             return hosts
         else:
             # return HttpResponseRedirect("servers_create")
-            hosts = ()
+            hosts = ("host_list", "host_list")
             return hosts
     except requests.exceptions.ConnectionError:
         hosts = ()
