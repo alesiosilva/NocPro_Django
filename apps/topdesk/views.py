@@ -20,16 +20,17 @@ from apps.core.models import Servers
 @login_required
 def ativos_list(request):
     try:
-        model_servers = Servers.objects.get(nome="topdesk")
-        #servidor = model_servers.host
-        api_user = model_servers.user
-        api_senha = model_servers.password
-        data_string = api_user + ":" + api_senha
-        authorization = data_string.encode("utf-8")
-        authorization = base64.b64encode(authorization)
-        authorization = authorization.decode("utf-8")
-        authorization = "Basic " + str(authorization)
         if Servers.objects.filter(nome="topdesk"):
+            model_servers = Servers.objects.get(nome="topdesk")
+            # servidor = model_servers.host
+            api_user = model_servers.user
+            api_senha = model_servers.password
+            data_string = api_user + ":" + api_senha
+            authorization = data_string.encode("utf-8")
+            authorization = base64.b64encode(authorization)
+            authorization = authorization.decode("utf-8")
+            authorization = "Basic " + str(authorization)
+
             response = requests.get(model_servers.host + '/tas/api/assetmgmt/assets?fields=unid,specification,name&templateName=Backbone',
             #headers={'content-type': 'application/json', 'Authorization': 'Basic xxxxxxxxxxx'})
             headers={'content-type': 'application/json', 'Authorization': authorization})
