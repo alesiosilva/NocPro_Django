@@ -7,7 +7,6 @@ import requests
 
 class Acionamento(models.Model):
 
-    
     #nome = models.CharField(max_length=100)
     nome = models.ForeignKey(User, on_delete=models.PROTECT)
     email = models.EmailField(blank=True, default="")
