@@ -8,3 +8,7 @@
 .tituloPag{
     padding-top: 10px;
 }
+.tab_lista_chamados{
+    height: 400px;
+    overflow: auto;
+}

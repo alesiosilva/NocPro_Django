@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block header %}
+ <div class="col-sm">
+        <a class="btn btn-light"  href="{% url 'home' %}">HOME</a>
+        <a class="btn btn-light"  href="{% url 'host_list' %}">CENTREON</a>
+        <a class="btn btn-light"  href="{% url 'ativos_list' %}">TOPDESK</a>
+        <a class="btn btn-light"  href="{% url 'list_acionamentos' %}">ACIONAMENTOS</a>
+    </div>
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm">
+            <a href="{% url 'logout' %}" class="btn btn-light btnlogout">Sair</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+<div>
+ <form method="post" class="post-form" action="/topdesk/tickets_update">
+        {% csrf_token %}
+
+      <div class="form-group">
+          <label for="filtro_filas">Fila:</label>
+          <select id="filtro_filas" name="filtro_filas" class="form-control">
+            <option>-</option>
+            <option>GTI::NOC::NOC-ADM</option>
+          </select>
+      </div>
+  <b>Lista de chamados:</b>
+     <div class="tab_lista_chamados">
+  <table class="table table-striped">
+    <thead >
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">#</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Status</th>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for ticket in tickets_list %}
+      <tr>
+        <td><input type="checkbox" id="alterar" name="alterar" value="{{ ticket.id }}"></td>
+        <td>{{ ticket.number }}</td>
+        <td>{{ ticket.briefDescription }}</td>
+        <td>{{ ticket.processingStatus.name }}</td>
+      </tr>{% endfor %}
+
+    </tbody>
+  </table>
+     </div>
+<b>Alteração massiva:</b>
+    <div class="form-group">
+      <label for="status">Novo status</label>
+      <select id="status" name="status" class="form-control">
+        <option>-</option>
+        <option>Aberto</option>
+        <option>Resolvido</option>
+        <option>Retomar contato</option>
+        <option>Encaminhado</option>
+        <option>Aguardando solicitante</option>
+        <option>Aguardando fornecedor</option>
+      </select>
+
+        <label for="exampleFormControlTextarea1">Nova nota</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+</div>
+{% endblock %}
