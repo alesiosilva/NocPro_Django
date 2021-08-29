@@ -21,6 +21,7 @@ from apps.core.models import Servers
 @login_required
 def tickets_update(request):
     inputs_status = request.POST.get('status')
+    inputs_nota = request.POST.get('nota')
     inputs_alterar = request.POST.getlist('alterar')
     #return HttpResponse(inputs_alterar)
     #response = json.dumps(
@@ -34,7 +35,7 @@ def tickets_update(request):
     chamados = json.dumps(inputs_alterar)
 
     for chamado in inputs_alterar:
-        rest_post_update(chamado,inputs_status)
+        rest_post_update(chamado,inputs_status,inputs_nota)
     #    x = chamado
     #return HttpResponse(x)
 
@@ -44,7 +45,7 @@ def tickets_update(request):
     return HttpResponse(chamados, content_type='application/json')
 
 
-def rest_post_update(chamado,inputs_status):
+def rest_post_update(chamado,inputs_status,inputs_nota):
     try:
         if Servers.objects.filter(nome="topdesk"):
             model_servers = Servers.objects.get(nome="topdesk")
@@ -61,7 +62,8 @@ def rest_post_update(chamado,inputs_status):
 
             ticket_create_json = {
                 'processingStatus':
-                    {'name': inputs_status}
+                    {'name': inputs_status},
+                'action': inputs_nota
             }
 
             response = requests.put(model_servers.host + url_complement,
@@ -81,8 +83,16 @@ def rest_post_update(chamado,inputs_status):
 
 @login_required
 def massive_change(request):
+    return render(request, 'topdesk/massive_change.html')
+
+
+@login_required
+def lista_chamados(self):
     try:
         if Servers.objects.filter(nome="topdesk"):
+
+            filtro_fila = self.POST.get('fila')
+
             model_servers = Servers.objects.get(nome="topdesk")
             # servidor = model_servers.host
             api_user = model_servers.user
@@ -94,16 +104,18 @@ def massive_change(request):
             authorization = "Basic " + str(authorization)
 
             url_complement = '/tas/api/incidents?page_size=20&'
-            url_complement = url_complement + 'query=operatorGroup.name==GTI::NOC::NOC-ADM;'
+            url_complement = url_complement + 'query=operatorGroup.name==' + filtro_fila + ';'
             url_complement = url_complement + 'processingStatus.name!=Fechado&'
             url_complement = url_complement + 'fields=id,number,briefDescription,processingStatus.name'
 
             response = requests.get(model_servers.host + url_complement,
             #headers={'content-type': 'application/json', 'Authorization': 'Basic xxxxxxxxxxx'})
             headers={'content-type': 'application/json', 'Authorization': authorization})
-            tickets = response.json()
+            #tickets = response.json()
 
-            return render(request, 'topdesk/massive_change.html', {'tickets_list': tickets})
+
+            #return render(request, 'topdesk/massive_change.html', {'tickets_list': tickets})
+            return HttpResponse(response, content_type='application/json')
         else:
             return HttpResponseRedirect("/servers_create")
 

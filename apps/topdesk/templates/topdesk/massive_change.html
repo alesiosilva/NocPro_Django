@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 {% block header %}
  <div class="col-sm">
         <a class="btn btn-light"  href="{% url 'home' %}">HOME</a>
@@ -22,14 +23,18 @@
 
       <div class="form-group">
           <label for="filtro_filas">Fila:</label>
-          <select id="filtro_filas" name="filtro_filas" class="form-control">
+          <select id="filtro_filas" name="filtro_filas" class="form-control" onchange="atualizaTabChamados()">
             <option>-</option>
+            <option>GTI</option>
+            <option>GTI::NOC</option>
             <option>GTI::NOC::NOC-ADM</option>
+             <option>GTI::NOC::RedeIPE</option>
+
           </select>
       </div>
   <b>Lista de chamados:</b>
      <div class="tab_lista_chamados">
-  <table class="table table-striped">
+  <table class="table table-striped" id="tab_lista_chamados">
     <thead >
       <tr>
         <th scope="col"></th>
@@ -40,13 +45,13 @@
       </tr>
     </thead>
     <tbody>
-    {% for ticket in tickets_list %}
+    <!--{% for ticket in tickets_list %}
       <tr>
         <td><input type="checkbox" id="alterar" name="alterar" value="{{ ticket.id }}"></td>
         <td>{{ ticket.number }}</td>
         <td>{{ ticket.briefDescription }}</td>
         <td>{{ ticket.processingStatus.name }}</td>
-      </tr>{% endfor %}
+      </tr>{% endfor %}-->
 
     </tbody>
   </table>
@@ -64,12 +69,17 @@
         <option>Aguardando fornecedor</option>
       </select>
 
-        <label for="exampleFormControlTextarea1">Nova nota</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <label for="nota">Nova nota</label>
+        <textarea class="form-control" id="nota" name="nota" rows="3"></textarea>
 
     </div>
 
     <button type="submit" class="btn btn-success">Salvar</button>
     </form>
 </div>
+{% endblock %}
+
+{% block static %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/funcoes-ajax.js' %}"></script>
 {% endblock %}
