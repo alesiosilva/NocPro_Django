@@ -11,42 +11,34 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
 import ldap
 from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import ActiveDirectoryGroupType
 
-AUTH_LDAP_SERVER_URI = ''
-AUTH_LDAP_BIND_DN = "uid=app.splunk-hmg.r,OU=APLICACOES,dc=rnp,dc=local"
-#AUTH_LDAP_BIND_DN = "CN=bind,CN=Users,DC=tech,DC=local"
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'django_auth_ldap.backend.LDAPBackend',
+]
+
+AUTH_LDAP_SERVER_URI = 'ldap://'
+AUTH_LDAP_BIND_DN = "uid=,OU=APLICACOES,dc=rnp,dc=local"
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
-            #"dc=rnp,dc=local", ldap.SCOPE_SUBTREE, "uid=%(user)s"
-            "dc=rnp,dc=local", ldap.SCOPE_SUBTREE, "(&(objectClass=person)(|(memberOf=CN=GRP_SRV_SPLUNK,OU=SPLUNK,OU=GRUPOS,OU=RNP,DC=rnp,DC=local)(memberOf=cn=GRP_SRV_SPLUNK_EXT,OU=SPLUNK,OU=GRUPOS,OU=EXTERNOS,dc=rnp,dc=local)))"
+            "dc=rnp,dc=local", ldap.SCOPE_SUBTREE, "uid=%(user)s"
             )
 
 AUTH_LDAP_USER_ATTR_MAP = {
             "username": "uid",
             "first_name": "cn",
-            "last_name": "sn",
             "email": "mail",
 }
-from django_auth_ldap.config import ActiveDirectoryGroupType
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-            "dc=rnp,dc=local", ldap.SCOPE_SUBTREE, "(objectCategory=Group)"
-            )
-AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType(name_attr="cn")
-AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-            "is_superuser": "CN=django-admins,CN=Users,DC=RNP,DC=LOCAL",
-            "is_staff": "CN=django-admins,CN=Users,DC=RNP,DC=LOCAL",
-            }
-AUTH_LDAP_FIND_GROUP_PERMS = True
-AUTH_LDAP_CACHE_GROUPS = True
-AUTH_LDAP_GROUP_CACHE_TIMEOUT = 1  # 1 hour cache
 
-AUTHENTICATION_BACKENDS = [
-            'django_auth_ldap.backend.LDAPBackend',
-            'django.contrib.auth.backends.ModelBackend',
-]
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
+AUTH_LDAP_FIND_GROUP_PERMS = False
+AUTH_LDAP_CACHE_GROUPS = False
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600  # 1 hour cache
+AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -169,3 +161,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'login'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': 'ldap.log',
+        },
+    },
+    'loggers': {
+        'django_auth_ldap': {
+                'level': 'DEBUG',
+                'handlers': ['file'],
+                'propagate': True,
+        },
+    },
+}

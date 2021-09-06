@@ -168,3 +168,8 @@ python manage.py flush
 # criar app home, estruturar relacionamento, criar model de autoriações no adm.
 
 
+#habilitar logs ldap
+no settings incluir LOGGING = {
+
+}
+#ativar login via ldap
