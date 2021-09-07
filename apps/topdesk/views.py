@@ -21,7 +21,7 @@ from apps.core.models import Servers
 @login_required
 def tickets_update(request):
     inputs_status = request.POST.get('status')
-    inputs_nota = request.POST.get('nota') + '<br/><br/>Operador: ' + request.user
+    inputs_nota = request.POST.get('nota') + '<br/><br/>Operador: ' + request.user.first_name
     inputs_alterar = request.POST.getlist('alterar')
     #return HttpResponse(inputs_alterar)
     #response = json.dumps(
