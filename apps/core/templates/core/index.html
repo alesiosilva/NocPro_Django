@@ -1,18 +1,10 @@
 {% extends 'base.html' %}
 
+{% block user %}
+    {{ usuario.first_name }}
+{% endblock %}
 {% block header %}
- <div class="col-sm">
-        <a class="btn btn-light" href="{% url 'home' %}">HOME</a>
-        <a class="btn btn-light" href="{% url 'host_list' %}">CENTREON</a>
-        <a class="btn btn-light"  href="{% url 'ativos_list' %}">TOPDESK - Ativos</a>
-        <a class="btn btn-light"  href="{% url 'massive_change' %}">TOPDESK - alteração massiva</a>
-        <a class="btn btn-light"  href="{% url 'list_acionamentos' %}">ACIONAMENTOS</a>
-        <a class="btn btn-light"  href="{% url 'servers' %}">CONFIGURAÇÕES</a>
-    </div>
 
-    <div class="col-sm">
-            <a href="{% url 'logout' %}" class="btn btn-light btnlogout">Sair</a>
-    </div>
 {% endblock %}
 
 

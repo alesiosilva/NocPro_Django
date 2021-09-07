@@ -1,19 +1,13 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
 {% load static %}
-{% block header %}
- <div class="col-sm">
-        <a class="btn btn-light"  href="{% url 'home' %}">HOME</a>
-        <a class="btn btn-light"  href="{% url 'host_list' %}">CENTREON</a>
-        <a class="btn btn-light"  href="{% url 'ativos_list' %}">TOPDESK</a>
-        <a class="btn btn-light"  href="{% url 'list_acionamentos' %}">ACIONAMENTOS</a>
-    </div>
-    <div class="col-sm">
 
-    </div>
-    <div class="col-sm">
-            <a href="{% url 'logout' %}" class="btn btn-light btnlogout">Sair</a>
-    </div>
+{% block user %}
+    {{ usuario.first_name }}
+{% endblock %}
+
+{% block header %}
+
 {% endblock %}
 
 {% block main %}
@@ -26,12 +20,24 @@
           <select id="filtro_filas" name="filtro_filas" class="form-control" onchange="atualizaTabChamados()">
             <option>-</option>
             <option>GTI</option>
-            <option>GTI::NOC</option>
+            <option>GTI::Infraestrutura TI</option>
             <option>GTI::NOC::NOC-ADM</option>
             <option>GTI::NOC::RedeIPE</option>
-            <option>GTI::CDC-PE</option>
+            <option>GTI::Serviços de TI</option>
             <option>GTI::IDC</option>
-
+            <option>GTI::CDC-PE</option>
+            <option>GTI::Infraestrutura TI::N3</option>
+            <option>GTI::NOC</option>
+            <option>GTI::Serviços de TI::N2</option>
+            <option>GTI::Infraestrutura TI::N2</option>
+            <option>GTI::Serviços de TI::N3</option>
+            <option>GTI::Backlog</option>
+            <option>GTI::Suporte Local Campinas</option>
+            <option>GTI::Cofre de Senhas</option>
+            <option>GTI::Serviços de TI::N3::MCONF-TEC</option>
+            <option>GTI::INFRA-POPs</option>
+            <option>GTI::Suporte Local Brasilia</option>
+            <option>GTI::Suporte Local Rio</option>
           </select>
       </div>
   <b>Lista de chamados:</b>
@@ -72,7 +78,10 @@
       </select>
 
         <label for="nota">Nova nota</label>
-        <textarea class="form-control" id="nota" name="nota" rows="3"></textarea>
+        <textarea class="form-control" id="nota" name="nota" rows="3" >
+
+
+        </textarea>
 
     </div>
 

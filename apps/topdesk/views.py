@@ -21,7 +21,7 @@ from apps.core.models import Servers
 @login_required
 def tickets_update(request):
     inputs_status = request.POST.get('status')
-    inputs_nota = request.POST.get('nota')
+    inputs_nota = request.POST.get('nota') + '<br/><br/>Operador: ' . request.user
     inputs_alterar = request.POST.getlist('alterar')
     #return HttpResponse(inputs_alterar)
     #response = json.dumps(
@@ -83,7 +83,9 @@ def rest_post_update(chamado,inputs_status,inputs_nota):
 
 @login_required
 def massive_change(request):
-    return render(request, 'topdesk/massive_change.html')
+    data = {}
+    data['usuario'] = request.user
+    return render(request, 'topdesk/massive_change.html', data)
 
 
 @login_required
@@ -92,6 +94,7 @@ def lista_chamados(self):
         if Servers.objects.filter(nome="topdesk"):
 
             filtro_fila = self.POST.get('fila')
+            #filtro_fila = filtro_fila.replace(" ", "%20")
 
             model_servers = Servers.objects.get(nome="topdesk")
             # servidor = model_servers.host
@@ -103,7 +106,7 @@ def lista_chamados(self):
             authorization = authorization.decode("utf-8")
             authorization = "Basic " + str(authorization)
 
-            url_complement = '/tas/api/incidents?page_size=20&'
+            url_complement = '/tas/api/incidents?page_size=50&'
             url_complement = url_complement + 'query=operatorGroup.name==' + filtro_fila + ';'
             url_complement = url_complement + 'processingStatus.name!=Fechado&'
             url_complement = url_complement + 'fields=id,number,briefDescription,processingStatus.name'
@@ -125,6 +128,8 @@ def lista_chamados(self):
 
 @login_required
 def ativos_list(request):
+    data = {}
+    data['usuario'] = request.user
     try:
         if Servers.objects.filter(nome="topdesk"):
             model_servers = Servers.objects.get(nome="topdesk")
@@ -141,7 +146,7 @@ def ativos_list(request):
             #headers={'content-type': 'application/json', 'Authorization': 'Basic xxxxxxxxxxx'})
             headers={'content-type': 'application/json', 'Authorization': authorization})
             ativos = response.json()
-            return render(request, 'topdesk/ativos_list.html', {'ativos_list': ativos['dataSet']})
+            return render(request, 'topdesk/ativos_list.html', {'ativos_list': ativos['dataSet'], 'user': data})
         else:
             return HttpResponseRedirect("/servers_create")
 

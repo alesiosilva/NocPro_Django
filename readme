@@ -173,3 +173,21 @@ no settings incluir LOGGING = {
 
 }
 #ativar login via ldap
+ - instalar recursos do ldap no SO
+ apt-get -y install libldap2-dev libsasl2-dev ldap-utils
+ - instalar pip3 install django-auth-ldap
+### configuração de grupos exempo
+ ``` #from django_auth_ldap.config import ActiveDirectoryGroupType
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+            "dc=rnp,dc=local", ldap.SCOPE_SUBTREE, "(&(cn=%s)(objectClass=groupOfNames))"
+            )
+
+AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType(name_attr="cn")
+#AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
+
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+	'is_active': 'ou=SPLUNK,OU=GRUPOS,ou=RNP,dc=rnp,dc=local;OU=SPLUNK,OU=GRUPOS,OU=EXTERNOS,dc=rnp,dc=local',
+	'is_superuser': 'ou=SPLUNK,OU=GRUPOS,ou=RNP,dc=rnp,dc=local;OU=SPLUNK,OU=GRUPOS,OU=EXTERNOS,dc=rnp,dc=local',
+	#"is_staff": "CN=django-admins,CN=Users,DC=rnp,DC=LOCAL",
+	'is_staff': 'ou=SPLUNK,OU=GRUPOS,ou=RNP,dc=rnp,dc=local;OU=SPLUNK,OU=GRUPOS,OU=EXTERNOS,dc=rnp,dc=local',
+ } ```

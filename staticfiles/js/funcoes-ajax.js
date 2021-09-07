@@ -2,6 +2,9 @@ function atualizaTabChamados(){
     //console.log(id);
     token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     fila = document.getElementsByName("filtro_filas")[0].value;
+    //fila = fila.replace(' ', '%20');
+    fila = '\"' + fila + '\"';
+    //console.log(fila);
 
     $("#tab_lista_chamados tbody").empty();
 
@@ -15,7 +18,7 @@ function atualizaTabChamados(){
             fila: fila
         },
         success: function(result){
-            //console.log('teste');
+            //console.log(result);
             //$("#mensagem").text(result);
 
             for(var result_cont in result){
