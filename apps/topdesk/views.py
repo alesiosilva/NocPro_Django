@@ -32,17 +32,32 @@ def tickets_update(request):
     #)
     #return HttpResponse(response, content_type='application/json')
 
-    chamados = json.dumps(inputs_alterar)
+    #chamados = json.dumps(inputs_alterar)
 
+    #for chamado in inputs_alterar:
+    #    chamados_atualizados = rest_post_update(chamado,inputs_status,inputs_nota)
+    #    chamados = chamados + ',' + chamados_atualizados['number']
+
+    data = []
     for chamado in inputs_alterar:
-        rest_post_update(chamado,inputs_status,inputs_nota)
+        chamados_atualizados = rest_post_update(chamado, inputs_status, inputs_nota)
+        item = {
+            "number": chamados_atualizados['number'],
+            "briefDescription": chamados_atualizados['briefDescription'],
+            "processingStatus": chamados_atualizados['processingStatus']
+        }
+        data.append(item)
+
+    #chamados = json.dumps(data)
+    chamados = data
     #    x = chamado
     #return HttpResponse(x)
 
     #return HttpResponse("chamados atualizados")
     #return HttpResponse(inputs_status)
 
-    return HttpResponse(chamados, content_type='application/json')
+    #return HttpResponse(chamados, content_type='application/json')
+    return render(request, 'topdesk/ticket_update.html', {'tickets_list': chamados})
 
 
 def rest_post_update(chamado,inputs_status,inputs_nota):
@@ -73,7 +88,8 @@ def rest_post_update(chamado,inputs_status,inputs_nota):
             tickets = response.json()
 
             #return render(request, 'topdesk/massive_change.html', {'tickets_list': tickets})
-            return HttpResponse(tickets, content_type='application/json')
+            #return HttpResponse(tickets, content_type='application/json')
+            return tickets
         else:
             return HttpResponseRedirect("/servers_create")
 

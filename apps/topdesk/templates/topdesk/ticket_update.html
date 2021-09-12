@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load static %}
+
+{% block user %}
+    {{ usuario.first_name }}
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+<div>
+
+
+  <b>Chamados atualizados:</b>
+     <div class="tab_lista_chamados">
+  <table class="table table-striped" id="tab_lista_chamados">
+    <thead >
+      <tr>
+        <!--<th scope="col"></th>-->
+        <th scope="col">#</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Status</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for ticket in tickets_list %}
+      <tr>
+        <!--<td><input type="checkbox" id="alterar" name="alterar" value="{{ ticket.id }}"></td>-->
+        <td>{{ ticket.number }}</td>
+        <td>{{ ticket.briefDescription }}</td>
+        <td>{{ ticket.processingStatus.name }}</td>
+      </tr>{% endfor %}
+
+    </tbody>
+  </table>
+       <a href="{% url 'massive_change' %}" class="btn btn-info">Voltar</a><br/>
+     </div>
+
+</div>
+{% endblock %}
+
+{% block static %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/funcoes-ajax.js' %}"></script>
+{% endblock %}
