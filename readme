@@ -167,11 +167,11 @@ python manage.py flush
 
 # criar app home, estruturar relacionamento, criar model de autoriações no adm.
 
-
 #habilitar logs ldap
 no settings incluir LOGGING = {
 
 }
+
 #ativar login via ldap
  - instalar recursos do ldap no SO
  apt-get -y install libldap2-dev libsasl2-dev ldap-utils
@@ -191,3 +191,7 @@ AUTH_LDAP_USER_FLAGS_BY_GROUP = {
 	#"is_staff": "CN=django-admins,CN=Users,DC=rnp,DC=LOCAL",
 	'is_staff': 'ou=SPLUNK,OU=GRUPOS,ou=RNP,dc=rnp,dc=local;OU=SPLUNK,OU=GRUPOS,OU=EXTERNOS,dc=rnp,dc=local',
  } ```
+
+ ### Filtro atendente
+ ### Nova Fila
+ 
